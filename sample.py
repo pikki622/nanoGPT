@@ -1,6 +1,7 @@
 """
 Sample from a trained model
 """
+
 import os
 import torch
 import tiktoken
@@ -40,8 +41,7 @@ enc = tiktoken.get_encoding("gpt2")
 start_ids = enc.encode(start, allowed_special={"<|endoftext|>"})
 x = (torch.tensor(start_ids, dtype=torch.long, device=device)[None, ...])
 
-for k in range(num_samples):
-
+for _ in range(num_samples):
     with torch.no_grad():
         with torch.amp.autocast(device_type="cuda", dtype=torch.bfloat16):
             y = model.generate(x, max_new_tokens, temperature=temperature, top_k=top_k)
